@@ -42,9 +42,9 @@ def calc(chromo):
                 ref_task[idx] = task
                 machines[idx][1] = times[task][0] # Tempo restante
             else:
-                new_chromo.append(task)
+                new_chromo.append(task) # Tarefas que ferem a restrição de prioridade são adiadas
             
-            
+            # Pegar o menor time left que não seja 0, para evitar ciclos em máquinas ociosas
             mtl = [i[1] for i in machines]
             temp = sorted(list(filter(lambda x: x, mtl)))
             temp.append(0)
