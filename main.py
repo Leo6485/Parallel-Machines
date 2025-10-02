@@ -104,7 +104,7 @@ def plot_all_runs(executions_data):
     plt.close()
 
 
-def export_csv(executions_data, filename='executions_data.csv'):
+def export_csv(executions_data, filename='results/executions_data.csv'):
     with open(filename, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['mutate_prob', 'elite_size', 'individuos', 'cross_prob', 'selecao', 'geracoes', 'geracao', 'elite', 'max', 'min', 'mean', 'median', 'std'])
