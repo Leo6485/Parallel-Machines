@@ -137,7 +137,7 @@ class Ag:
         median = np.median(y)
         std = np.std(y)
 
-        self.data.append((self.elite[0].y, max(y), min(y), mean, median, std))
+        self.data.append((self.elite[0].y, max(y), min(y), mean, median, std, self.elite[0].chromo))
 
     def fit(self, generations):
         for _ in range(generations):
