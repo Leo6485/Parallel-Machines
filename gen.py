@@ -15,7 +15,7 @@ class Individuo:
         self.y = None
 
     def fit(self, funct):
-        self.y = funct(self.chromo)
+        self.y, self.chromo = funct(self.chromo)
 
     def mut(self, prob):
         if random() <= prob:
@@ -129,7 +129,7 @@ class Ag:
             
     def show(self):
         if len(self.elite):
-            print(f"Melhor fitness: {self.elite[0].y} {len(self.elite[0].chromo)}")
+            print(f"Melhor fitness: {self.elite[0].y} {len(self.elite[0].chromo)} {self.elite[0].chromo}")
     
     def save_data(self):
         y = [x.y for x in self.population]

@@ -27,6 +27,8 @@ def calc(chromo):
     concluidas = set()
     chromo = chromo[:]
 
+    sequencia = []
+
     while chromo:
         new_chromo = []
 
@@ -35,6 +37,7 @@ def calc(chromo):
             if times[task][1].issubset(concluidas):
                 ref_task[idx] = task
                 machines[idx][1] = times[task][0] # Tempo restante
+                sequencia.append(task)
             else:
                 new_chromo.append(task) # Tarefas que ferem a restrição de prioridade são adiadas
             
@@ -53,7 +56,7 @@ def calc(chromo):
                     concluidas.add(ref_task[i])
 
         chromo = new_chromo
-    return max(machines)[0]
+    return max(machines)[0], sequencia
 
 
 num_tasks = None
