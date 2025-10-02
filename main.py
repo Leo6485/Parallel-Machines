@@ -1,24 +1,9 @@
 from gen import Ag
 import csv
 import matplotlib.pyplot as plt
+from input import read
 
-
-def read(filename):
-    global num_tasks, num_machines, times
-    with open(filename, "r") as f:
-        data = f.read().split("\n")
-        num_tasks, num_machines = map(int, data[0].split())
-        
-        times = [[0, set()] for i in range(num_tasks)]
-
-        for i, line in enumerate(data[1:]):
-            line_data = list(map(int, line.split()))
-            
-            times[i][0] = line_data[0]
-
-            for task in line_data[1:]:
-                times[task - 1][1].add(i)
-
+# Calcula o makespan e atualiza a sequência do chromo para não violar as restrições
 def calc(chromo):
     global times, num_machines
 
@@ -27,17 +12,19 @@ def calc(chromo):
     concluidas = set()
     chromo = chromo[:]
 
-    sequencia = []
+    sequencia_corrigida = []
 
     while chromo:
         new_chromo = []
 
         for task in chromo:
+            # Como todas as máquinas são iguais, basta executar na que está livre, logo a sequência determina onde cada task irá ser executada
+            # Isso é válido para os problemas "facil.txt" e "dificil.txt"
             idx = machines.index(min(machines, key=lambda x: x[0]))
             if times[task][1].issubset(concluidas):
                 ref_task[idx] = task
                 machines[idx][1] = times[task][0] # Tempo restante
-                sequencia.append(task)
+                sequencia_corrigida.append(task)
             else:
                 new_chromo.append(task) # Tarefas que ferem a restrição de prioridade são adiadas
             
@@ -56,14 +43,13 @@ def calc(chromo):
                     concluidas.add(ref_task[i])
 
         chromo = new_chromo
-    return max(machines)[0], sequencia
+    return max(machines)[0], sequencia_corrigida
 
 
-num_tasks = None
-num_machines = None
-times = None
-read("dificil.txt")
+num_tasks, num_machines, times = read(filename="dificil.txt")
 
+
+# Teste fatorial
 
 population_size = [100]
 elite_size = [2]
