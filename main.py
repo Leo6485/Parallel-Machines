@@ -3,12 +3,6 @@ import csv
 import matplotlib.pyplot as plt
 
 
-
-
-
-from copy import copy
-
-
 def read(filename):
     global num_tasks, num_machines, times
     with open(filename, "r") as f:
@@ -31,7 +25,7 @@ def calc(chromo):
     machines = [[0, 0] for i in range(num_machines)]
     ref_task = [-1] * num_machines
     concluidas = set()
-    chromo = copy(chromo)
+    chromo = chromo[:]
 
     while chromo:
         new_chromo = []

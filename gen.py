@@ -19,11 +19,8 @@ class Individuo:
 
     def mut(self, prob):
         if random() <= prob:
-            idx = [randint(0, self.size - 1) for i in range(2)]
-
-            bak = self.chromo[idx[0]]
-            self.chromo[idx[0]] = self.chromo[idx[1]]
-            self.chromo[idx[1]] = bak
+            i, j = randint(0, self.size - 1), randint(0, self.size - 1)
+            self.chromo[i], self.chromo[j] = self.chromo[j], self.chromo[i]
 
 class Ag:
     def __init__(self, size=100, elite_size=2, mut_prob=0.01, cross_prob=1, chromo_size=16, sel_mode=1, funct=lambda x:1):
@@ -108,7 +105,28 @@ class Ag:
     def mut(self):
         for x in self.population:
             x.mut(self.mut_prob)
+    
+    def local_search(self):
+        n = max(1, int(self.size * 0.1))
+        amostra = sample(self.population, n)
+        for x in amostra:
+            if x.y is None: x.fit(self.funct)
+            best = x.y
+            best_chromo = x.chromo[:]
+            for _ in range(10):
+                i, j = randint(0, self.chromo_size - 1), randint(0, self.chromo_size - 1)
+                x.chromo[i], x.chromo[j] = x.chromo[j], x.chromo[i]
+                x.fit(self.funct)
+                if x.y < best:
+                    best = x.y
+                    best_chromo = x.chromo[:]
+                else:
+                    x.chromo[i], x.chromo[j] = x.chromo[j], x.chromo[i]
+            x.chromo = best_chromo
+            x.y = best
 
+
+            
     def show(self):
         if len(self.elite):
             print(f"Melhor fitness: {self.elite[0].y} {len(self.elite[0].chromo)}")
@@ -131,5 +149,6 @@ class Ag:
             self.save_data()
             self.cross_all()
             self.mut()
+            self.local_search()
             
             self.population.extend(deepcopy(self.elite))
