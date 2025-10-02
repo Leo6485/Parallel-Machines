@@ -62,7 +62,7 @@ def plot_best(best_data):
     plt.title('Melhor Individuo')
     plt.grid(True, linestyle='--', alpha=0.5)
     plt.tight_layout()
-    plt.savefig('best.png')
+    plt.savefig('results/best.png')
     plt.close()
 
 
@@ -84,7 +84,7 @@ def plot_stats(best_data):
     plt.legend()
     plt.grid(True, linestyle='--', alpha=0.5)
     plt.tight_layout()
-    plt.savefig('best_2.png')
+    plt.savefig('results/best_2.png')
     plt.close()
 
 
@@ -100,7 +100,7 @@ def plot_all_runs(executions_data):
     plt.legend(fontsize='small', ncol=2)
     plt.grid(True, linestyle='--', alpha=0.5)
     plt.tight_layout()
-    plt.savefig('all.png')
+    plt.savefig('results/all.png')
     plt.close()
 
 
@@ -114,7 +114,7 @@ def export_csv(executions_data, filename='executions_data.csv'):
                 writer.writerow([m, e, i, c, sel, gen_total, idx, elite, mx, mn, mean, median, std])
 
 
-num_tasks, num_machines, times = read(filename="dificil.txt")
+num_tasks, num_machines, times = read(filename="inputs/dificil.txt")
 
 population_size = [100]
 elite_size      = [2]
