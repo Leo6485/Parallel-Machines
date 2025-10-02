@@ -65,7 +65,7 @@ def calc(chromo):
 num_tasks = None
 num_machines = None
 times = None
-read("in2.txt")
+read("dificil.txt")
 
 
 population_size = [100]
