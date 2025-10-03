@@ -108,8 +108,8 @@ def fact_test():
                             executions_data.append((ag.data, (m, e, i, c, mode, g)))
     
                             executions_data.append((ag.data, (m, e, i, c, mode, g)))
-
-
+    
+    best_data, best_params = min(executions_data, key=lambda x: x[0][-1][2])
     print(f"Melhor execução: {best_params}\nDistância: {best_data[-1][2]}")
 
     print(f"Sequência: {best_data[-1][6]}")
